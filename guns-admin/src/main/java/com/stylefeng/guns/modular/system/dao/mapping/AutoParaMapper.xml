@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.AutoParaMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.AutoPara">
+        <id column="ID" property="id" />
+        <result column="PARA_TYPE_ID" property="paraTypeId" />
+        <result column="PARA_NAME" property="paraName" />
+        <result column="PARA_CODE" property="paraCode" />
+        <result column="CAR_PARTS_ID" property="carPartsId" />
+        <result column="STATUS" property="status" />
+        <result column="TIPS" property="tips" />
+        <result column="CREATE_TIME" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, PARA_TYPE_ID, PARA_NAME, PARA_CODE, CAR_PARTS_ID, STATUS, TIPS, CREATE_TIME
+    </sql>
+
+</mapper>

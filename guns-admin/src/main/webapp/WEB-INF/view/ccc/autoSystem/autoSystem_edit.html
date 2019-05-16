@@ -1,0 +1,94 @@
+@layout("/common/_container.html"){
+<link rel="stylesheet" type="text/css" href="${ctxPath}/static/css/doublebox-bootstrap.css">
+<style type="text/css">
+    .ue-container {
+        width: 60%;
+        margin: 0 auto;
+        margin-top: 3%;
+        padding: 20px 40px;
+        border: 1px solid #ddd;
+        background: #fff;
+    }
+</style>
+<script src="${ctxPath}/static/js/doublebox-bootstrap.js"></script>
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <input type="hidden" name="id" value="${item.id}" id="id">
+                            <!--<#input id="id" name="" value="${item.id}" underline="true"/>-->
+                            <#input id="carSystemName" name="车辆系统名称" value="${item.carSystemName}" underline="true"/>
+                            <#input id="carSystemCode" name="车辆系统编码" value="${item.carSystemCode}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <!--<#input id="status" name="状态" value="${item.status}" underline="true"/>-->
+                            <!--<#input id="tips" name="备注" value="${item.tips}" underline="true"/>-->
+                            <!--<#input id="createTime" name="创建日期" value="${item.createTime}" />-->
+                </div>
+            </div>
+            <div class="ue-container">
+                <select multiple="multiple" size="10" name="doublebox" class="demo"></select>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="AutoSystemInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="AutoSystemInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/ccc/autoSystem/autoSystem_info.js"></script>
+<script type="text/javascript">
+    var demo2;
+    $(function(){
+        var  allParts;
+        var  selectedParts;
+        $.ajax({
+            url:"/autoParts/getparalistAll",
+            async:false,
+            type:"post",
+            dataType : "json",
+            contentType:"application/json",
+            success: function (data) {
+                allParts = data; // JOSN.parse(data)；将 字符串换转成JSON对象
+            },
+            error:function(data){
+                console.log("弹窗标签所有列表获取异常");
+            }
+        });
+
+        $.ajax({
+            url:"/autoParts/getpartslist/"+$('#id').val(),
+            async:false,
+            type:"post",
+            dataType : "json",
+            contentType:"application/json",
+            success: function (data) {
+                selectedParts = data; // JOSN.parse(data)；将 字符串换转成JSON对象
+            },
+            error:function(data){
+                console.log("弹窗标签所有列表获取异常");
+            }
+        });
+
+        demo2 = $('.demo').doublebox({
+            nonSelectedListLabel: '零部件',
+            selectedListLabel: '已选择的零部件',
+            preserveSelectionOnMove: 'moved',
+            moveOnSelect: false,
+            nonSelectedList: allParts,
+            selectedList: selectedParts,
+            optionValue:"id",
+            optionText:"partsName",
+            doubleMove:true,
+        });
+    })
+
+</script>
+@}

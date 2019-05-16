@@ -1,0 +1,45 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>carModel管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="modelName" name="车型" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="partsName" name="零件" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="AutoModelParts.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="AutoModelPartsTableToolbar" role="group">
+
+                            @if(shiro.hasPermission("/autoModelParts/update")){
+                                <#button name="填写数据" icon="fa-plus" clickFun="AutoModelParts.openAutoModelPartsDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/autoModelParts/askForModify")){
+                            <#button name="申请修改" icon="fa-edit" clickFun="AutoModelParts.askForModify()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/autoModelParts/agree")){
+                                <#button name="审批" icon="fa-edit" clickFun="AutoModelParts.agree()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/autoModelParts/reInput")){
+                            <#button name="重新填写" icon="fa-edit" clickFun="AutoModelParts.reInput()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="AutoModelPartsTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/ccc/autoModelParts/autoModelParts.js"></script>
+@}

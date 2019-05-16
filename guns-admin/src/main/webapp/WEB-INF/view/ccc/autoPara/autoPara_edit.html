@@ -1,0 +1,33 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" value="${item.id}" underline="true"/>
+                            <#input id="paraTypeId" name="参数类型id" value="${item.paraTypeId}" underline="true"/>
+                            <#input id="paraName" name="参数名称" value="${item.paraName}" underline="true"/>
+                            <#input id="paraCode" name="参数编码" value="${item.paraCode}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="carPartsId" name="零部件id" value="${item.carPartsId}" underline="true"/>
+                            <#input id="status" name="状态" value="${item.status}" underline="true"/>
+                            <#input id="tips" name="备注" value="${item.tips}" underline="true"/>
+                            <#input id="createTime" name="创建时间" value="${item.createTime}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="AutoParaInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="AutoParaInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/ccc/autoPara/autoPara_info.js"></script>
+@}

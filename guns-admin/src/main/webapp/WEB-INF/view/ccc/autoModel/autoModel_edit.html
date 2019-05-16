@@ -1,0 +1,73 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <input type="hidden" name="id" id="id" value="${item.id}"/>
+                            <!--<#input id="id" name="" value="${item.id}" underline="true"/>-->
+                            <#input id="modelName" name="车型名称" value="${item.modelName}" underline="true"/>
+                            <#input id="modelCode" name="车型编码" value="${item.modelCode}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <!--<#input id="status" name="车型状态" value="${item.status}" underline="true"/>-->
+                            <!--<#input id="tips" name="备注" value="${item.tips}" underline="true"/>-->
+                            <!--<#input id="createTime" name="穿件日期" value="${item.createTime}" />-->
+                </div>
+            </div>
+            <!-- 树开始 -->
+            <div class="container" style="padding:  0px 10px !important;margin-top: -10px;text-align: center !important;">
+                <div class="row">
+                    <div class="ibox float-e-margins">
+                        <!--<div class="ibox-title">-->
+                        <!--<h5>${roleName!}</h5>-->
+                        <!--</div>-->
+                        <div class="ibox-content">
+                            <ul id="zTree" class="ztree"></ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 树开始 -->
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="AutoModelInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="AutoModelInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/ccc/autoModel/autoModel_info.js"></script>
+<script type="text/javascript">
+    var zTree;
+    $(function () {
+        initZtree();
+    });
+
+    function initZtree() {
+        var setting = {
+            check: {
+                enable: true,
+                chkboxType: { "Y": "ps", "N": "ps" }
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+
+        zTree = new $ZTree("zTree", "/autoModel/getEditModelTree/"+$('#id').val());
+        zTree.setSettings(setting);
+        zTree.init();
+        AutoModelInfoDlg.partZtree = zTree;
+    }
+
+
+</script>
+@}

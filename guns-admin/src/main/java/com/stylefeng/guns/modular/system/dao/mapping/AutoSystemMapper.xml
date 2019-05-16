@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.AutoSystemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.AutoSystem">
+        <id column="ID" property="id" />
+        <result column="CAR_SYSTEM_NAME" property="carSystemName" />
+        <result column="CAR_SYSTEM_CODE" property="carSystemCode" />
+        <result column="STATUS" property="status" />
+        <result column="TIPS" property="tips" />
+        <result column="CREATE_TIME" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, CAR_SYSTEM_NAME, CAR_SYSTEM_CODE, STATUS, TIPS, CREATE_TIME
+    </sql>
+
+</mapper>

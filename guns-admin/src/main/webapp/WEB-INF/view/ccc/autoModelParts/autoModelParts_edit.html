@@ -1,0 +1,83 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <input id="id" name="id" value="${item.id}" type="hidden"/>
+                    <input id="modelId" name="modelId" value="${item.modelId}" type="hidden"/>
+                    <input id="partsId" name="partsId" value="${item.partsId}" type="hidden"/>
+
+                    车型<input id="modelName" name="modelName" value="${item.modelName}" readonly/>
+
+                            <!--<#input id="id" name="" value="${item.id}" underline="true"/>-->
+                            <!--<#input id="modelId" name="车型id" value="${item.modelId}" underline="true"/>-->
+                            <!--<#input id="partsId" name="零部件id" value="${item.partsId}" />-->
+
+                </div>
+
+                <div class="col-sm-6">
+                    零件<input id="partsName" name="partsName" value="${item.partsName}" readonly/>
+                    零件编号<input id="partsCode" name="partsCode" value="${item.partsCode}" readonly/>
+                            <!--<#input id="status" name="状态" value="${item.status}" underline="true"/>-->
+                            <!--<#input id="tips" name="备注" value="${item.tips}" underline="true"/>-->
+                            <!--<#input id="createTime" name="创建日期" value="${item.createTime}" />-->
+
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <!--<#input id="status" name="状态" value="${item.status}" underline="true"/>-->
+                <!--<#input id="tips" name="备注" value="${item.tips}" underline="true"/>-->
+                <!--<#input id="createTime" name="创建日期" value="${item.createTime}" />-->
+                参数列表
+                <table width="800" border="1">
+                    <tr>
+                        <td>序号</td>
+                        <td>参数名</td>
+                        <td>参数值</td>
+                        <td>填写说明</td>
+                    </tr>
+                    <input type="hidden" id="ids" value="${ids}"/>
+                    @for(item in paras){
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.paraName}</td>
+                        @if(item.paraValue==null && item.paraUrl==null){
+                            @if(item.paraTypeId==1){
+                                <td><input type="text" name="paraValue${item.id}" id="paraValue${item.id}"/></td>
+                            @}else if(item.paraTypeId==2){
+                                <td><input type="file" name="paraValueFile${item.id}" id="paraValueFile${item.id}"/></td>
+                            @}else{
+                                <td><input type="text" name="paraValue${item.id}" id="paraValue${item.id}" />
+                                    <input type="file" name="paraValueFile${item.id}" id="paraValueFile${item.id}" />
+                                </td>
+                            @}
+                        @}else{
+                            <td>
+                                @if(item.paraValue!=null){
+                                    ${item.paraValue}
+                                @}
+                                @if(item.paraUrl!=null){
+                                    <a href="${item.paraUrl}" target="_blank">查看附件</a>
+                                @}
+                            </td>
+                        @}
+                        <td>${item.tips}</td>
+                    </tr>
+                    @}
+                </table>
+            </div>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="AutoModelPartsInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="AutoModelPartsInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/ccc/autoModelParts/autoModelParts_info.js"></script>
+@}

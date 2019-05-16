@@ -1,0 +1,33 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" underline="true"/>
+                            <#input id="modelId" name="车型ID" underline="true"/>
+                            <#input id="paraId" name="参数ID" underline="true"/>
+                            <#input id="paraValue" name="参数值"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="tips" name="备注" underline="true"/>
+                            <#input id="status" name="状态" underline="true"/>
+                            <#input id="createTime" name="创建日期" underline="true"/>
+                            <#input id="version" name="版本" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="AutoModelParaInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="AutoModelParaInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/ccc/autoModelPara/autoModelPara_info.js"></script>
+@}

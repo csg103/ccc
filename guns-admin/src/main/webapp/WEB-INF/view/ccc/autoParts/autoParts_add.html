@@ -1,0 +1,172 @@
+@layout("/common/_container.html"){
+
+<table width="800" height="301" border="1">
+    <tr>
+        <td><table width="800" height="74" border="0">
+            <tr>
+                <td width="400">零部件信息</td>
+                <td width="400">&nbsp;</td>
+            </tr>
+            <tr>
+                <td width="400">零部件名称
+                    <input type="text" name="partsName" id="partsName" /></td>
+                <td width="400">
+                    <!--零部件别名-->
+                    <!--<input type="text" name="partsCode" id="partsCode" readonly/>-->
+                </td>
+            </tr>
+            <tr>
+                <td width="400">所属系统
+
+                    <select name="carSystemId" id="carSystemId">
+                        <option value="">请选零部件所属系统</option>
+                        @for(item in systems){
+                        <option value="${item.id}">${item.carSystemName}-${item.carSystemCode}</option>
+                        @}
+                    </select></td>
+                <td width="400">上级零部件
+                    <select name="pid" id="pid">
+                        <option value="">请选上级零部件</option>
+                        @for(item in autoParts){
+                        <option value="${item.id}">${item.partsName}-${item.partsCode}</option>
+                        @}
+                    </select></td>
+            </tr>
+            <tr>
+                <td width="400">&nbsp;</td>
+                <td width="400"><input type="submit" name="addParts" id="addParts" value="添加零部件" /></td>
+            </tr>
+        </table></td>
+    </tr>
+    <tr>
+        <td><table width="800" border="0">
+            <tr>
+                <td width="400">零件参数信息</td>
+                <td width="400">&nbsp;</td>
+            </tr>
+            <tr>
+                <input type="hidden" name="partsId" id="partsId"/>
+                <td width="400">参数名称
+                    <input type="text" name="paraName" id="paraName" /></td>
+                <td width="400">参数别名
+                    <input type="text" name="paraCode" id="paraCode" /></td>
+            </tr>
+            <tr>
+                <td width="400">参数值类型
+                    <select name="paraTypeId" id="paraTypeId">
+                        <option value="">请选参数值类型</option>
+                        @for(item in autoParaTypes){
+                        <option value="${item.id}">${item.paraTypeName}</option>
+                        @}
+                    </select>
+                <td width="400">填写说明
+                    <input type="text" name="tips" id="tips" /></td>
+            </tr>
+            <tr>
+                <td width="400">&nbsp;</td>
+                <td width="400"><input type="submit" name="addPara" id="addPara" value="添加参数" /></td>
+            </tr>
+        </table></td>
+    </tr>
+    <tr>
+        <td><table width="800" border="1">
+            <tr>
+                <td width="134">零部件参数列表</td>
+                <td width="158">&nbsp;</td>
+                <td width="153">&nbsp;</td>
+                <td width="137">&nbsp;</td>
+                <td width="157">&nbsp;</td>
+                <td width="52">&nbsp;</td>
+                <td width="44">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>序号</td>
+                <td>参数名称</td>
+                <td>参数别名</td>
+                <td>参数值类型</td>
+                <td>填写说明</td>
+                <td>操作</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr >
+                <td colspan="7" id="datas">
+                </td>
+            </tr>
+
+        </table></td>
+    </tr>
+</table>
+
+<script src="${ctxPath}/static/modular/ccc/autoPara/autoPara_info.js"></script>
+<script>
+    $('#addParts').click(function () {
+            var partsName = $('#partsName').val();
+            var partsCode = $('#partsCode').val();
+            var carSystemId = $('#carSystemId').val();
+            var pid = $('#pid').val();
+            if(null==partsName || ''==partsName){
+                Feng.error('零部件名称为空！');
+                return false;
+            }
+//            if(null==partsCode || ''==partsCode){
+//                Feng.error('零部件别名为空！');
+//                return false;
+//            }
+            //提交信息
+            var ajax = new $ax(Feng.ctxPath + "/autoParts/add?partsName="+partsName+"&partsCode="+partsCode+"&carSystemId="+carSystemId+"&pid="+pid, function(data){
+                if(data.code==200){
+                    Feng.success("添加成功!");
+                    $('#partsId').val(data.id);
+                    window.refresh();
+                }else{
+                    Feng.error("添加失败!" + data.message + "!");
+                }
+            },function(data){
+                Feng.error("添加失败!" + data.responseJSON.message + "!");
+            });
+            ajax.start();
+        }
+    )
+
+    $('#addPara').click(function () {
+            var paraName = $('#paraName').val();
+            var paraCode = $('#paraCode').val();
+            var paraTypeId = $('#paraTypeId').val();
+            var carPartsId = $('#partsId').val();
+            var tips = $('#tips').val();
+            if(null==paraName || ''==paraName){
+                Feng.error('参数名称为空！');
+                return false;
+            }
+            if(null==paraCode || ''==paraCode){
+                Feng.error('参数别名为空！');
+                return false;
+            }
+            if(null==paraTypeId || ''==paraTypeId){
+                Feng.error('参数类型为空！');
+                return false;
+            }
+            //提交信息
+            var ajax = new $ax(Feng.ctxPath + "/autoPara/add?paraName="+paraName+"&paraCode="+paraCode+"&paraTypeId="+paraTypeId+"&carPartsId="+carPartsId+"&tips="+tips, function(data){
+                if(data.code==200){
+                    Feng.success("添加成功!");
+                    $('#datas').append('<table width="800" border="1"><tr>' +
+                        '<td width="134">' + data.id+ '</td>' +
+                        '<td width="153">' + paraName+ '</td>' +
+                        '<td width="153">' + paraCode+ '</td>' +
+                        '<td width="137">' + paraTypeId+ '</td>' +
+                        '<td width="157">' + tips+ '</td>' +
+                        '<td width="52"><input type="submit" name="deletePara" id="deletePara" value="删除参数" /></td>' +
+                        '<td width="44"></td>' +
+                        '</tr></table>');
+                }else{
+                    Feng.error("添加失败!" + data.message + "!");
+                }
+            },function(data){
+                Feng.error("添加失败!" + data.responseJSON.message + "!");
+            });
+            ajax.start();
+        }
+    )
+</script>
+@}

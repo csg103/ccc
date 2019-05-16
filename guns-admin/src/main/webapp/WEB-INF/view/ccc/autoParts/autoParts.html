@@ -1,0 +1,44 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>零部件管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="condition" name="名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="AutoParts.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="AutoPartsTableToolbar" role="group">
+                            @if(shiro.hasPermission("/autoParts/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="AutoParts.openAddAutoParts()"/>
+                            @}
+                            @if(shiro.hasPermission("/autoParts/update")){
+                                <#button name="修改" icon="fa-edit" clickFun="AutoParts.openAutoPartsDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/autoParts/delete")){
+                                <#button name="删除" icon="fa-remove" clickFun="AutoParts.delete()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/autoParts/delete")){
+                            <#button name="查看零部件实例" icon="fa-edit" clickFun="#" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/autoParts/delete")){
+                            <#button name="添加零部件实例" icon="fa-plus" clickFun="#" space="true"/>
+                            @}
+                        </div>
+                        <#table id="AutoPartsTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/ccc/autoParts/autoParts.js"></script>
+@}

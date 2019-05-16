@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.AutoModelPartsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.AutoModelParts">
+        <id column="ID" property="id" />
+        <result column="MODEL_ID" property="modelId" />
+        <result column="PARTS_ID" property="partsId" />
+        <result column="STATUS" property="status" />
+        <result column="TIPS" property="tips" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="VERSION" property="version" />
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, MODEL_ID, PARTS_ID, STATUS, TIPS, CREATE_TIME,VERSION
+    </sql>
+
+    <select id="getListByNames" parameterType="com.stylefeng.guns.modular.system.model.AutoModelParts" resultType="map">
+        select a.ID id, a.MODEL_ID modelId, a.PARTS_ID partsId, a.STATUS status, a.TIPS tips, a.CREATE_TIME createTime,a.VERSION version
+        from ccc_auto_model_parts a
+        left  join ccc_auto_model b on a.MODEL_ID = b.id
+        left  join ccc_auto_parts c on a.PARTS_ID = c.id
+        where 1=1
+        <if test="modelName != null and modelName != ''">
+            and b.MODEL_NAME like CONCAT('%',#{modelName},'%')
+        </if>
+        <if test="partsName != null and partsName != ''">
+            and c.PARTS_NAME like CONCAT('%',#{partsName},'%')
+        </if>
+    </select>
+
+    <select id="getModelParaList" resultType="com.stylefeng.guns.modular.system.model.AutoModelPara" parameterType="com.stylefeng.guns.modular.system.model.AutoModelPara">
+
+    </select>
+
+</mapper>
